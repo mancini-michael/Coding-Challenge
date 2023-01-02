@@ -52,19 +52,20 @@ export const RegistrationForm = () => {
   /**
    * submit user data, reset states and clean form
    * */
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    e.currentTarget.reset();
-    console.log(user);
-    setError(formUtils.errorInitialState);
-    setUser(formUtils.userInitialState);
+
+    if (disabled) {
+      return;
+    } else {
+      console.log(user);
+      setError(formUtils.errorInitialState);
+      setUser(formUtils.userInitialState);
+    }
   };
 
   return (
-    <form
-      className="text-secondary bg-light border border-4 border-secondary p-5"
-      onSubmit={(e) => handleSubmit(e)}
-    >
+    <form className="text-secondary bg-light border border-4 border-secondary p-5">
       <>
         <h3 className="text-center border-bottom border-secondary pb-2 mb-3">
           Registration
@@ -79,7 +80,7 @@ export const RegistrationForm = () => {
             id="username"
             className="form-control"
             value={`${user.username}`}
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
           />
           {error.username && <span>non valido</span>}
         </div>
@@ -93,7 +94,7 @@ export const RegistrationForm = () => {
             id="email"
             className="form-control"
             value={`${user.email}`}
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
           />
           {error.email && <span>non valido</span>}
         </div>
@@ -107,7 +108,7 @@ export const RegistrationForm = () => {
             id="password"
             className="form-control"
             value={`${user.password}`}
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
           />
           {error.password && <span>non valido</span>}
         </div>
@@ -121,7 +122,7 @@ export const RegistrationForm = () => {
             id="confirmPassword"
             className="form-control"
             value={`${user.confirmPassword}`}
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
           />
           {error.confirmPassword && <span>non valido</span>}
         </div>
@@ -132,7 +133,7 @@ export const RegistrationForm = () => {
             id="termsAndConditions"
             className="form-check-input"
             checked={user.termsAndConditions}
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
           />
           <label htmlFor="termsAndConditions" className="form-check-label">
             I agree with terms and conditions.
@@ -140,6 +141,7 @@ export const RegistrationForm = () => {
         </div>
         <button
           className={`btn btn-primary w-100 ${disabled ? "disabled" : ""}`}
+          onClick={handleSubmit}
         >
           Register
         </button>
